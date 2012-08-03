@@ -1,4 +1,5 @@
 import random # random.randint(a, b) Return a random integer N such that a <= N <= b.
+import re
 
 class DiceError(Exception):
     pass
@@ -90,16 +91,16 @@ class DiceRoll:
         return item in self.results
 
 
-
 # Verify the input is a string, remove any whitespace, check it has only characters from the permissible set then pass to calculate method
 def roll(raw_data):
     if type(raw_data) is not str:
         raise DiceError('Roll: Input must be in string form (got: ' + str(type(raw_data)) + ')')
 
-    formated_data = raw_data.lower().replace(' ', '').replace('\n', '').replace('\r', '').replace('\t', '')
+    formated_data = re.sub(r'\s', '', raw_data)
     for char in formated_data:
         if char not in '0123456789d+-*/()':
             raise DiceError('Roll: Invalid character/s in input string \''+ raw_data + '\'')
+
     while True:
         #print formated_data
         new_data = formated_data.replace('--', '+')
@@ -143,6 +144,7 @@ def __calculate(raw_data):
         pass
     else:
         stop = True
+
     # Check for a single dice term: '(int)'d'(int)'.
     try:
         split_list = raw_data.split('d')
@@ -209,10 +211,4 @@ def __calculate(raw_data):
         evaluation = DiceRoll(total, roll_results)
         return evaluation
     else:
-        raise DiceError('Bad Formatting in input string "' + raw_data + '"') # total never got assigned an int value 
-
-
-
-#######################################
-## TESTING
-#######################################
+        raise DiceError('Bad syntax in input string "' + raw_data + '"') # total never got assigned an int value 
