@@ -121,9 +121,9 @@ def roll(raw_data):
         break
     #print formated_data
 
-    total = (__calculate(formated_data))
-    print  raw_data + ' = ' + str(total[0]) + ' (' + str(total[1]) + ')'
-    return total
+    result = (__calculate(formated_data))
+    #print  raw_data + ' = ' + str(total[0]) + ' (' + str(total[1]) + ')'
+    return result
 
 
 # Return the evaluated experession and an ordered list of the results of each individual dice roll
@@ -206,7 +206,8 @@ def __calculate(raw_data):
         sweep2 = not sweep2
 
     if total is not None:
-        return (total, roll_results) 
+        evaluation = DiceRoll(total, roll_results)
+        return evaluation
     else:
         raise DiceError('Bad Formatting in input string "' + raw_data + '"') # total never got assigned an int value 
 
