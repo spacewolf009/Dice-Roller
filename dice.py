@@ -3,6 +3,94 @@ import random # random.randint(a, b) Return a random integer N such that a <= N 
 class DiceError(Exception):
     pass
 
+class DiceRoll:
+    def __init__(self, evaluation, results):
+        self.evaluation = evaluation
+        self.results = results
+
+    def __lt__(self, other):
+        return self.evaluation < other
+
+    def __le__(self, other):
+        return self.evaluation <= other
+
+    def __gt__(self, other):
+        return self.evaluation > other
+
+    def __ge__(self, other):
+        return self.evaluation >= other
+
+    def __eq__(self, other):
+        return self.evaluation == other
+
+    def __ne__(self, other):
+        return self.evaluation != other
+
+    def __add__(self, other):
+        return self.evaluation + other
+
+    def __sub__(self, other):
+        return self.evaluation - other
+
+    def __mul__(self, other):
+        return self.evaluation * other
+
+    def __floordiv__(self, other):
+        return self.evaluation // other
+
+    def __mod__(self, other):
+        return self.evaluation % other
+
+    # def __divmod__(self, other):
+    #     pass
+
+    def __radd__(self, other):
+        return other + self.evaluation
+
+    def __rsub__(self, other):
+        return other - self.evaluation
+
+    def __rmul__(self, other):
+        return other * self.evaluation
+
+    # def __rdiv__(self, other):
+    #     re
+
+    # def __rtruediv__(self, other):
+    #     pass
+
+    def __rfloordiv__(self, other):
+        return other // self.evaluation
+
+    def __rmod__(self, other):
+        return other % self.evaluation
+
+    # def __rdivmod__(self, other):
+    #     pass
+
+    def __len__(self):
+        return len(self.results)
+
+    def __getitem__(self, key):
+        return self.results[key]
+
+    def __setitem__(self, key, value):
+        self.results[key] = value
+
+    def __delitem__(self, key):
+       del self.results[key]
+
+    # def __iter__(self):
+    #     pass
+
+    # def __reversed__(self):
+    #     pass
+
+    def __contains__(self, item):
+        return item in self.results
+
+
+
 # Verify the input is a string, remove any whitespace, check it has only characters from the permissible set then pass to calculate method
 def roll(raw_data):
     if type(raw_data) is not str:
@@ -121,6 +209,8 @@ def __calculate(raw_data):
         return (total, roll_results) 
     else:
         raise DiceError('Bad Formatting in input string "' + raw_data + '"') # total never got assigned an int value 
+
+
 
 #######################################
 ## TESTING
